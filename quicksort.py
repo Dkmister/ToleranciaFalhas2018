@@ -29,7 +29,8 @@ def quicksort(array = [], begin = 0, end = 0):
 
 
 with open('input.txt', 'r') as file:
-    array = [];
+    array = []
+    output = ''
     substr = ' '
     line = file.readline()
     for i in line:
@@ -41,5 +42,9 @@ with open('input.txt', 'r') as file:
     print('Initial Array:\t', array)
     quicksort(array, 0, len(array) - 1)
     print('Sorted Array:\t', array)
-
-
+    with open('output.txt', 'w') as file:
+        for number in array[:-1]:
+            output += str(number)
+            output += ' '
+        output += str(array[-1])
+        file.write(output)
