@@ -1,3 +1,5 @@
+import sys
+
 def a_swap(array = [], li = 0, ri = 0):
     aux = array[li]
     array[li] = array[ri]
@@ -27,8 +29,9 @@ def quicksort(array = [], begin = 0, end = 0):
         quicksort(array, split_at + 1, end)
 
 
-
-with open('input.txt', 'r') as file:
+inputname = str(sys.argv[1])
+outputname = str(sys.argv[2])
+with open(inputname, 'r') as file:
     array = []
     output = ''
     substr = ' '
@@ -42,7 +45,7 @@ with open('input.txt', 'r') as file:
     print('Initial Array:\t', array)
     quicksort(array, 0, len(array) - 1)
     print('Sorted Array:\t', array)
-    with open('output.txt', 'w') as file:
+    with open(outputname, 'w') as file:
         for number in array[:-1]:
             output += str(number)
             output += ' '
