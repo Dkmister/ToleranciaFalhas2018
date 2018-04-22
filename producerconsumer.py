@@ -7,7 +7,7 @@ import time
 import random
 
 queue = []
-MAX_NUM = 10
+MAX_NUM = 3
 condition = Condition()
 """
 classe Produtor :
@@ -21,9 +21,14 @@ Utiliza condition para fazer sincronização e espera da outra thread Consumidor
 """
 class ProducerThread(Thread):
 	def run(self):
-		nums = range(5)
+		flag = True
+		nums = range(2)
+		n = 0
 		global queue
-		while True:
+		while flag:
+			if n == 10:
+				flag = False
+			n += 1
 			condition.acquire()
 			if len(queue) == MAX_NUM:
 				print ("Fila cheia, produtor esperando...")
@@ -49,7 +54,12 @@ Utiliza sincronização e espera , através do condition para a correta utiliza�
 class ConsumerThread(Thread):
 	def run(self):
 		global queue
-		while True:
+		flag = True
+		n = 0 
+		while flag:
+			if n == 10:
+				flag = False
+			n += 1
 			condition.acquire()
 			if not queue:
 				print ("Nada na fila, consumidor esperando ...")
