@@ -8,12 +8,11 @@ import random
 import sys
 
 queue = []
-MAX_NUM = 1
 condition = Condition()
 output = []
 output_str = ''
-prod_total = 0
-cons_total = 0
+MAX_NUM = 1
+
 """
 classe Produtor :
 
@@ -26,7 +25,9 @@ Utiliza condition para fazer sincronização e espera da outra thread Consumidor
 """
 class ProducerThread(Thread):
 	def run(self):
-		nums = range(5)
+		flag = True
+		nums = range(2)
+		n = 0
 		global queue
 		prod_total = 0
 		while prod_total < 10:
@@ -57,8 +58,8 @@ Utiliza sincronização e espera , através do condition para a correta utiliza�
 """
 class ConsumerThread(Thread):
 	def run(self):
-		global queue
-		cons_total = 0	
+		global queue	
+		cons_total = 0
 		while cons_total < 10:
 			condition.acquire()
 			if not queue:
@@ -76,7 +77,7 @@ class ConsumerThread(Thread):
 			time.sleep(random.random())
 			cons_total += 1
 
-			
+		
 
 output_filename = str(sys.argv[1])
 with open(output_filename, 'w') as file:
