@@ -5,10 +5,15 @@
 from threading import Thread,Condition
 import time
 import random
+import sys
 
 queue = []
-MAX_NUM = 10
+MAX_NUM = 1
 condition = Condition()
+output = []
+output_str = ''
+prod_total = 0
+cons_total = 0
 """
 classe Produtor :
 
@@ -23,7 +28,8 @@ class ProducerThread(Thread):
 	def run(self):
 		nums = range(5)
 		global queue
-		while True:
+		prod_total = 0
+		while prod_total < 10:
 			condition.acquire()
 			if len(queue) == MAX_NUM:
 				print ("Fila cheia, produtor esperando...")
@@ -33,9 +39,12 @@ class ProducerThread(Thread):
 			queue.append(num)
 			print ("Produzido: ")
 			print (num)
+			with open(output_filename, 'a') as file:
+				file.write('Produzido 1\n')
 			condition.notify()
 			condition.release()
 			time.sleep(random.random())
+			prod_total += 1
 """
 classe Consumidor:
 
@@ -49,7 +58,8 @@ Utiliza sincronização e espera , através do condition para a correta utiliza�
 class ConsumerThread(Thread):
 	def run(self):
 		global queue
-		while True:
+		cons_total = 0	
+		while cons_total < 10:
 			condition.acquire()
 			if not queue:
 				print ("Nada na fila, consumidor esperando ...")
@@ -57,12 +67,22 @@ class ConsumerThread(Thread):
 				print ("Produtor adicionou algo na fila e notificou consumidor")
 			num = queue.pop(0)
 			print ("Consumido: ")
+			output.append(1)
 			print(num)
+			with open(output_filename, 'a') as file:
+				file.write('Consumido 1\n')
 			condition.notify()
 			condition.release()
 			time.sleep(random.random())
+			cons_total += 1
+
 			
-			
-			
+
+output_filename = str(sys.argv[1])
+with open(output_filename, 'w') as file:
+	file.write('Iniciando\n')
 ProducerThread().start()
 ConsumerThread().start()
+
+	
+
