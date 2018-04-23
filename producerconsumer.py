@@ -30,7 +30,7 @@ class ProducerThread(Thread):
 		n = 0
 		global queue
 		prod_total = 0
-		while prod_total < 10:
+		while prod_total < iterations:
 			condition.acquire()
 			if len(queue) == MAX_NUM:
 				print ("Fila cheia, produtor esperando...")
@@ -60,7 +60,7 @@ class ConsumerThread(Thread):
 	def run(self):
 		global queue	
 		cons_total = 0
-		while cons_total < 10:
+		while cons_total < iterations:
 			condition.acquire()
 			if not queue:
 				print ("Nada na fila, consumidor esperando ...")
@@ -80,6 +80,7 @@ class ConsumerThread(Thread):
 		
 
 output_filename = str(sys.argv[1])
+iterations = int(sys.argv[2])
 with open(output_filename, 'w') as file:
 	file.write('Iniciando\n')
 ProducerThread().start()
