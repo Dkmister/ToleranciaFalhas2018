@@ -9,7 +9,6 @@
 
 #define BUFSIZE 2
 
-#define SOURCE_CODE "saida.txt"
 
 static FILE *  out_fp;
 
@@ -64,6 +63,8 @@ int i = 10000;
 int j = 10000;
 
 int	main	(int	argc,	char	*argv[])	{
+	char *output = argv[1];
+	
 	semid = sem_create(3);
 	sem_initialise(MUTEX, 1);
 	sem_initialise(FULL, 0);
@@ -71,7 +72,9 @@ int	main	(int	argc,	char	*argv[])	{
 
 	pthread_t prod, cons;	
 	
-	out_fp = fopen(SOURCE_CODE, "w");
+	
+	
+	out_fp = fopen(output, "w");
 	if (out_fp == NULL)
 	{
 	 perror("FAIL TO OPEN THE SOURCE!");
