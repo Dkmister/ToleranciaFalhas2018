@@ -1,7 +1,7 @@
 
 #include<stdio.h>
-
 #include<stdlib.h>
+
 /*
 
 This program does Matrix Multiplication on 2 matrices
@@ -91,12 +91,65 @@ int** matrixMultiply(int** matrix1, int** matrix2)
 return result;
 }
 
-int main()
-{
+char* itoa(int i, char b[]){
+    char const digit[] = "0123456789";
+    char* p = b;
+    if(i<0){
+        *p++ = '-';
+        i *= -1;
+    }
+    int shifter = i;
+    do{ //Move to where representation ends
+        ++p;
+        shifter = shifter/10;
+    }while(shifter);
+    *p = '\0';
+    do{ //Move back, inserting digits as u go
+        *--p = digit[i%10];
+        i = i/10;
+    }while(i);
+    return b;
+}
 
+
+void writeMatrix(char *fileName,int **result){
+
+  FILE *fp;
+  int k=0;
+  int j=0;
+  //print the matrix, comment out if you dont need this
+
+    fp = fopen(fileName,"w+");
+    char writebuffer[256];
+
+    for(int k=0;k<MATRIX_SIZE;k++)
+    {
+        fprintf(fp,"\n");
+        for(int j=0;j<MATRIX_SIZE;j++)
+        {
+            itoa(result[k][j],writebuffer);
+            fprintf(fp, writebuffer);
+        }
+    }
+
+    printf("\n");
+    fclose(fp);
+
+
+}
+
+
+
+int main(int argc,char **argv)
+{
+  if (argc<4){
+    printf("Faltam argumentos!\n");
+    return -1;
+  }
 //change these file names if you need
-   char* fileName1 = "matrix1.txt";
-   char* fileName2 = "matrix2.txt";
+   char* fileName1 = argv[1];
+   char* fileName2 = argv[2];
+   char* fileName3 = argv[3];
 //pointers
     int** matrix1;
     int** matrix2;
@@ -105,15 +158,10 @@ int main()
     matrix2 = readMatrix(fileName2);
     result = matrixMultiply(matrix1, matrix2);
 
-//print the matrix, comment out if you dont need this
-    for(int k=0;k<MATRIX_SIZE;k++)
-    {
-        printf("\n");
-        for(int j=0;j<MATRIX_SIZE;j++)
-        {
-            printf("%d\t",result[k][j]);
-        }
-    }
+
+
+    writeMatrix(fileName3,result);
+
 free(matrix1);
 free(matrix2);
 free(result);
