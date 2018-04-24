@@ -12,7 +12,7 @@ Author: Sidharth N. Kashyap
 */
 
 //Change this if you need to modify the size of the matrix
-#define MATRIX_SIZE 3
+#define MATRIX_SIZE 1000
 /*
 This function reads the matrix into a 2D array and returns the pointer
 */
