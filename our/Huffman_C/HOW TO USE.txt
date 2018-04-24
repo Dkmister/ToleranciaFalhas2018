@@ -1,0 +1,4 @@
+1. ./compress <inputfilename> <outputfilename>
+Lembre-se de incluir as extensões - extensão de output é .hzip
+
+2. Caso queira testar pra ter certeza use ./decompress, mas pras injeções só use o compress
