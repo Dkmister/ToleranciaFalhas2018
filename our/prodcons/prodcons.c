@@ -7,7 +7,11 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-#define BUFSIZE 10
+#define BUFSIZE 2
+
+#define SOURCE_CODE "saida.txt"
+
+static FILE *  out_fp;
 
 #define MUTEX 0
 #define FULL 1
@@ -67,10 +71,18 @@ int	main	(int	argc,	char	*argv[])	{
 
 	pthread_t prod, cons;	
 	
+	out_fp = fopen(SOURCE_CODE, "w");
+	if (out_fp == NULL)
+	{
+	 perror("FAIL TO OPEN THE SOURCE!");
+	 return -1;
+	}
+	
 	pthread_create(&prod, NULL, producer, (void *)semid);
 	pthread_create(&cons, NULL, consumer, (void *)semid);
 	
 	pthread_exit(NULL);
+	fclose(out_fp);
 	return	0;
 }
 
@@ -85,7 +97,8 @@ void *producer(void *id) {
 		buffer[in] = data;
 		in = (in + 1) % BUFSIZE;
 		data = (data + 1) % BUFSIZE;
-		printf("P:%d\n", data);
+		//printf("P:%d\n", data);
+		fprintf(out_fp,"Producer:%d\n",data);
 		//printf("P\n");
 		signal(MUTEX);
 		signal(FULL);
@@ -103,7 +116,8 @@ void *consumer(void *id) {
 	/** Critical Section 	**/	
 	data = buffer[out];
 	out = (out + 1) % BUFSIZE;
-	printf("C:%d\n", data);
+	//printf("C:%d\n", data);
+	fprintf(out_fp,"Consumer:%d\n", data);
 	/** 			**/
 	
 	signal(MUTEX);
