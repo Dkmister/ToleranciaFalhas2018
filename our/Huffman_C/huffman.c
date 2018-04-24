@@ -16,6 +16,7 @@ TODO: Store code in bit array form(in Header), rather than string form, to save 
 #include<malloc.h>
 #include<string.h>
 #include "huffman.h"
+#include <unistd.h>
 #define INTERNAL 1
 #define LEAF 0
 
@@ -134,6 +135,7 @@ fclose(fp);
 fclose(fp2);
 
 printf("\nDone..\n");
+sleep(1);
 return 0;
 }
 
