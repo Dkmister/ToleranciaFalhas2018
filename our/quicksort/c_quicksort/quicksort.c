@@ -49,7 +49,10 @@ int main(int argc, char** argv)
     char *input = argv[1], *output = argv[2];
     int i = 0, j = 0;
     int inputArray[1000000];
+	int inputArray2[1000000];
 
+	int flag = 1;
+	
     FILE *inputFile, *outputFile;
     inputFile = fopen(input, "r");
 
@@ -59,8 +62,18 @@ int main(int argc, char** argv)
     }
 
     int n = sizeof(inputArray)/sizeof(inputArray[0]);
-    quickSort(inputArray, 0, n-1);
-
+	// Parte do código que será duplicada.
+    while(!flag)
+	{
+		quickSort(inputArray, 0, n-1);
+		quickSort(inputArray2, 0, n-1);
+		
+		if(inputArray == inputArray2) // usem um compare 
+		{
+			flag = 0;
+		}
+}
+    // Fim da parte do código duplicada 
     outputFile = fopen(output, "w");
     for(j = 0; j < 1000000; j++) {
         fprintf(outputFile, "%d\n", inputArray[j]);
