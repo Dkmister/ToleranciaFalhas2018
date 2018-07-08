@@ -153,11 +153,21 @@ int main(int argc,char **argv)
 //pointers
     int** matrix1;
     int** matrix2;
+    int** matrix01;
+    int** matrix02;
     int** result;
+    int** result2;
+    //Duplicacao
+   do
+    {
     matrix1 = readMatrix(fileName1);
     matrix2 = readMatrix(fileName2);
+    matrix01 = readMatrix(fileName1);
+    matrix02 = readMatrix(fileName2);
     result = matrixMultiply(matrix1, matrix2);
-
+    result2 = matrixMultiply(matrix01, matrix02);
+    } while(result == result2);
+    //Fim duplicacao
 
 
     writeMatrix(fileName3,result);
