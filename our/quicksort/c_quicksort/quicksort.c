@@ -50,11 +50,13 @@ int main(int argc, char** argv)
     int i = 0, j = 0;
     int inputArray[1000000];
 	int inputArray2[1000000];
+	char *outputlog;
 
 	int flag = 1;
 	
-    FILE *inputFile, *outputFile;
+    FILE *inputFile, *outputFile, *outputFileLog;
     inputFile = fopen(input, "r");
+    outputFileLog = fopen(outputlog,"a");
 
     for (i = 0; i < 1000000; i++)
     {
@@ -67,11 +69,20 @@ int main(int argc, char** argv)
 	{
 		quickSort(inputArray, 0, n-1);
 		quickSort(inputArray2, 0, n-1);
-		
+
 		if(inputArray == inputArray2) // usem um compare 
 		{
 			flag = 0;
 		}
+		
+		
+		for( i = 0; i < n; i++)
+	{
+		if(inputArray != inputArray2)
+		{
+		 fprintf(outputFileLog,"X[%d] - %d %d\n",i,inputArray[i],inputArray2[i]);
+		}
+    }
 }
     // Fim da parte do código duplicada 
     outputFile = fopen(output, "w");
